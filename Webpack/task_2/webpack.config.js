@@ -22,4 +22,9 @@ module.exports = {
       },
     ],
   },
+  performance: {
+    maxAssetSize: 2000000, // Limite en octets (2 Mo ici)
+    maxEntrypointSize: 2000000, // Limite en octets (2 Mo ici)
+    hints: 'warning', // Afficher un avertissement pour les fichiers qui dépassent la taille définie
+  },
 };
