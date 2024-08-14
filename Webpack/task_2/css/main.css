@@ -9,5 +9,5 @@
 #count {
 	font-weight: bold;
 	margin-left: 10px;
-	/* Positionner le texte à droite du bouton */
+	display: inline-block;
 }
