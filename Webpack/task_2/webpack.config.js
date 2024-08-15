@@ -15,10 +15,37 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource', // Charger les fichiers d'images
-        generator: {
-          filename: 'images/[name][ext][query]', // Nom du fichier de sortie
-        },
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name][ext][query]', // Nom du fichier de sortie
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65, // Compression JPEG
+              },
+              optipng: {
+                enabled: true, // Compression PNG
+              },
+              pngquant: {
+                quality: [0.65, 0.90],
+                speed: 4,
+              },
+              gifsicle: {
+                interlaced: false, // Compression GIF
+              },
+              webp: {
+                quality: 75, // Compression WebP
+              },
+            },
+          },
+        ],
+        type: 'asset/resource',
       },
     ],
   },
