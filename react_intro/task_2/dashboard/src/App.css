@@ -52,3 +52,7 @@ body {
   height: 40px;
   border: black 1px solid;
 }
+.loginForm {
+  display: flex;
+  gap: 10px;
+}
