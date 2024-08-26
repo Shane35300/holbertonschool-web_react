@@ -1,0 +1,11 @@
+.App-header {
+	background-color: white;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	font-size: 20px;
+	color: rgb(223, 3, 3);
+}
