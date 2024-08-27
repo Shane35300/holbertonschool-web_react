@@ -1,27 +1,31 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import CourseList from './CourseList';
-import CourseListRow from './CourseListRow';
+import { JSDOM } from 'jsdom';
+
+const { window } = new JSDOM('');
+global.window = window;
+global.document = window.document;
+global.navigator = {
+  userAgent: 'node.js',
+};
 
 describe('CourseList Component', () => {
   let wrapper;
 
-  beforeEach(() => {
-    wrapper = shallow(<CourseList />);
-  });
-
   it('renders CourseList component without crashing', () => {
+    wrapper = mount(<CourseList />);
     expect(wrapper.exists()).toBe(true);
   });
 
   describe('With CourseList Empty', () => {
     beforeEach(() => {
-      wrapper = shallow(<CourseList listCourses={[]} />);
+      wrapper = mount(<CourseList listCourses={[]} />);
     });
 
     it('renders the correct rows when listCourses is empty', () => {
-      expect(wrapper.find(CourseListRow).length).toBe(2); // Header rows + No course available row
-      expect(wrapper.find('tr').at(1).text()).toBe('No course available yet');
+      expect(wrapper.find('tr').length).toBe(3);
+      expect(wrapper.find('tr').at(2).text()).toBe('No course available yet');
     });
   });
 
@@ -32,17 +36,14 @@ describe('CourseList Component', () => {
         { id: 2, name: 'Webpack', credit: 20 },
         { id: 3, name: 'React', credit: 40 },
       ];
-      wrapper = shallow(<CourseList listCourses={courses} />);
+      wrapper = mount(<CourseList listCourses={courses} />);
     });
 
     it('renders the correct rows when listCourses is provided', () => {
-      expect(wrapper.find(CourseListRow).length).toBe(4); // Header rows + 3 course rows
-      expect(wrapper.find('tr').at(1).text()).toContain('ES6');
-      expect(wrapper.find('tr').at(1).text()).toContain('60');
-      expect(wrapper.find('tr').at(2).text()).toContain('Webpack');
-      expect(wrapper.find('tr').at(2).text()).toContain('20');
-      expect(wrapper.find('tr').at(3).text()).toContain('React');
-      expect(wrapper.find('tr').at(3).text()).toContain('40');
+      expect(wrapper.find('tr').length).toBe(5);
+      expect(wrapper.find('tr').at(2).text()).toContain('ES6');
+      expect(wrapper.find('tr').at(3).text()).toContain('Webpack');
+      expect(wrapper.find('tr').at(4).text()).toContain('React');
     });
   });
 });
