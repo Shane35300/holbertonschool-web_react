@@ -57,7 +57,7 @@ describe('App Component', () => {
   // Test pour vérifier l'appel de logOut et l'alerte lors de la combinaison Ctrl + H
   it('calls logOut and alerts "Logging you out" on Ctrl + H', () => {
     const logOutMock = jest.fn();
-    const wrapper = shallow(<App logOut={logOutMock} />);
+    shallow(<App logOut={logOutMock} />);
 
     // Simuler la pression des touches Ctrl + H
     const event = new KeyboardEvent('keydown', { ctrlKey: true, key: 'h' });
@@ -69,5 +69,6 @@ describe('App Component', () => {
 
   afterEach(() => {
     jest.resetAllMocks(); // Réinitialiser les mocks après chaque test
+    global.alert.mockRestore(); // Restaurer l'alerte à son état d'origine
   });
 });
