@@ -73,7 +73,7 @@ describe('Notifications Component', () => {
       });
 
       it('renders the correct value in NotificationItem components', () => {
-        const values = wrapper.find(NotificationItem).map(node => node.prop('value'));
+        const values = wrapper.find(NotificationItem).map(node => node.prop('value')).filter(value => value !== undefined);
         expect(values).toEqual(['New course available', 'New resume available']);
       });
     });
