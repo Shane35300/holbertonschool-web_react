@@ -11,18 +11,36 @@ import './App.css';
 class App extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool,
+    logOut: PropTypes.func,
   };
 
   static defaultProps = {
     isLoggedIn: false,
+    logOut: () => {}, // Valeur par défaut pour logOut
   };
 
   componentDidMount() {
+    // Ajouter le favicon
     const link = document.createElement('link');
     link.rel = 'icon';
     link.href = favicon;
     document.head.appendChild(link);
+
+    // Ajouter l'écouteur d'événements pour les touches
+    document.addEventListener('keydown', this.handleKeyDown);
   }
+
+  componentWillUnmount() {
+    // Nettoyer l'écouteur d'événements
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (event) => {
+    if (event.ctrlKey && event.key === 'h') {
+      alert('Logging you out');
+      this.props.logOut();
+    }
+  };
 
   render() {
     const { isLoggedIn } = this.props;
