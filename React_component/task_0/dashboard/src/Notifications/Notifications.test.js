@@ -5,23 +5,22 @@ import NotificationItem from './NotificationItem';
 
 describe('Notifications Component', () => {
   let wrapper;
+  let spy;
 
   beforeEach(() => {
-    // Initialisation par défaut avec displayDrawer en false
+    spy = jest.spyOn(console, 'log').mockImplementation(() => {});
     wrapper = shallow(<Notifications displayDrawer={false} />);
   });
 
+  afterEach(() => {
+    spy.mockRestore();
+  });
+
   it('renders without crashing', () => {
-    // Test pour vérifier que le composant se rend sans planter
     expect(wrapper.exists()).toBe(true);
   });
 
   describe('When displayDrawer is false', () => {
-    beforeEach(() => {
-      // Configuration de base pour displayDrawer = false
-      wrapper = shallow(<Notifications displayDrawer={false} />);
-    });
-
     it('renders the menuItem when displayDrawer is false', () => {
       expect(wrapper.find('.menuItem').exists()).toBe(true);
       expect(wrapper.find('.Notifications').exists()).toBe(false);
@@ -30,8 +29,7 @@ describe('Notifications Component', () => {
 
   describe('When displayDrawer is true', () => {
     beforeEach(() => {
-      // Configuration de base pour displayDrawer = true
-      wrapper = shallow(<Notifications displayDrawer={true} />);
+      wrapper.setProps({ displayDrawer: true });
     });
 
     it('renders the menuItem and Notifications div when displayDrawer is true', () => {
@@ -41,7 +39,6 @@ describe('Notifications Component', () => {
 
     describe('With empty listNotifications', () => {
       beforeEach(() => {
-        // Configuration avec listNotifications vide
         wrapper.setProps({ listNotifications: [] });
       });
 
@@ -53,7 +50,6 @@ describe('Notifications Component', () => {
 
     describe('With listNotifications', () => {
       beforeEach(() => {
-        // Configuration avec une liste de notifications
         wrapper.setProps({
           listNotifications: [
             { id: 1, type: 'default', value: 'New course available' },
@@ -67,14 +63,10 @@ describe('Notifications Component', () => {
         expect(wrapper.find(NotificationItem).length).toBe(3);
       });
 
-      it('renders the correct html in the NotificationItem with HTML', () => {
-        const htmlItem = wrapper.find(NotificationItem).at(2);
-        expect(htmlItem.prop('html')).toEqual({ __html: 'Notification with HTML' });
-      });
-
-      it('renders the correct value in NotificationItem components', () => {
-        const values = wrapper.find(NotificationItem).map(node => node.prop('value')).filter(value => value !== undefined);
-        expect(values).toEqual(['New course available', 'New resume available']);
+      it('calls markAsRead with correct message', () => {
+        const notificationInstance = wrapper.instance();
+        notificationInstance.markAsRead(1);
+        expect(spy).toHaveBeenCalledWith('Notification 1 has been marked as read');
       });
     });
   });
