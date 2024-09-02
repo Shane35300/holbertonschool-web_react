@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.App-logo {
+  height: 200px;
+  pointer-events: none;
+}
+.App {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.App-body {
+  border-bottom: red solid 3px;
+  border-top: red solid 3px;
+  padding-left: 30px;
+  padding-top: 30px;
+  width: 95%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-weight: 600;
+}

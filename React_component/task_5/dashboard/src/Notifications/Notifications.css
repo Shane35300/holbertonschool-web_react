@@ -1,0 +1,14 @@
+.Notifications {
+	border: 1px dashed red;
+	padding: 10px;
+}
+
+li[data-notification-type="default"] {
+	color: rgb(0, 0, 191);
+	/* Couleur pour les notifications par défaut */
+}
+
+li[data-notification-type="urgent"] {
+	color: red;
+	/* Couleur pour les notifications urgentes */
+}
