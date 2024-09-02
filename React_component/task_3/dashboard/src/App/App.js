@@ -4,6 +4,8 @@ import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
+import BodySection from '../BodySection/BodySection';
 import PropTypes from 'prop-types';
 import favicon from '../favicon.ico';
 import './App.css';
@@ -16,7 +18,7 @@ class App extends Component {
 
   static defaultProps = {
     isLoggedIn: false,
-    logOut: () => {}, // Valeur par défaut pour logOut
+    logOut: () => { }, // Valeur par défaut pour logOut
   };
 
   componentDidMount() {
@@ -63,7 +65,20 @@ class App extends Component {
         <div className="App">
           <Header />
           <div className="App-body">
-            {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+            {isLoggedIn ? (
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList listCourses={listCourses} />
+              </BodySectionWithMarginBottom>
+            ) : (
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login />
+              </BodySectionWithMarginBottom>
+            )}
+            <BodySection title="News from the School">
+              <p>
+                Voici quelques nouvelles de l'école. Nous prévoyons de lancer plusieurs nouveaux cours au cours du semestre à venir. Restez à l'écoute pour plus de détails !
+              </p>
+            </BodySection>
           </div>
           <Footer />
         </div>
