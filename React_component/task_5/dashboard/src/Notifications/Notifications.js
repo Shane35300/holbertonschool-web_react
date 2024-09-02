@@ -9,6 +9,15 @@ class Notifications extends Component {
     this.markAsRead = this.markAsRead.bind(this);
   }
 
+  // Ajout de shouldComponentUpdate pour optimiser les performances
+  shouldComponentUpdate(nextProps) {
+    // Ne se met à jour que si la longueur de la liste de notifications augmente
+    if (nextProps.listNotifications.length > this.props.listNotifications.length) {
+      return true;
+    }
+    return false;
+  }
+
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
   }
@@ -22,7 +31,15 @@ class Notifications extends Component {
         {displayDrawer && (
           <div className="Notifications">
             <button
-              style={{ position: 'absolute', top: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '20px' }}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '20px',
+              }}
               aria-label="Close"
               onClick={() => console.log('Close button has been clicked')}
             >
