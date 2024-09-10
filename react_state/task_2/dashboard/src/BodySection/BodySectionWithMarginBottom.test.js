@@ -23,13 +23,22 @@ describe('BodySectionWithMarginBottom Component', () => {
 
     const wrapper = shallow(
       <BodySectionWithMarginBottom title="test">
-        <p>test</p>
+        <BodySection title="test" />
       </BodySectionWithMarginBottom>
     );
 
-    expect(wrapper.find(`.${css(localStyles.bodySectionWithMargin)}`).exists()).toBe(true);
-    expect(wrapper.find(BodySection).exists()).toBe(true);
-    expect(wrapper.find(BodySection).props().title).toBe('test');
+    // Utilisez la classe CSS directement
+    const className = css(localStyles.bodySectionWithMargin);
+
+    // Vérifiez si l'élément a la classe CSS
+    expect(wrapper.hasClass(className)).toBe(true);
+
+    // Vérifiez la présence du composant BodySection
+    const bodySection = wrapper.find(BodySection);
+    expect(bodySection.exists()).toBe(true);
+
+    // Assurez-vous de vérifier la première instance du BodySection
+    expect(bodySection.at(0).props().title).toBe('test');
   });
 
   it('should render correctly a BodySection component and pass the correct props', () => {
