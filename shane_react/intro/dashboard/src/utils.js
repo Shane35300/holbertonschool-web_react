@@ -12,7 +12,7 @@ export function getFullYear() {
  * @returns {string} - The footer message.
  */
 export function getFooterCopy(isIndex) {
-	return isIndex ? 'isIndex is true' : 'isindex is false';
+	return isIndex ? 'isIndex is true' : 'isIndex is false';
 }
 
 /**
