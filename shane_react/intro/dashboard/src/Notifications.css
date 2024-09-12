@@ -1,0 +1,6 @@
+.Notifications {
+	color: rgb(8, 8, 134);
+}
+li[data-priority="urgent"] {
+	color: red;
+}
