@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
 import AppContext from './AppContext';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
@@ -10,7 +11,6 @@ import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import PropTypes from 'prop-types';
 import favicon from '../favicon.ico';
-import { connect } from 'react-redux';
 
 class App extends Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class App extends Component {
 
   static defaultProps = {
     isLoggedIn: false,
-    logOut: () => {}, // Default value for logOut
+    logOut: () => {},
   };
 
   componentDidMount() {
@@ -108,22 +108,22 @@ class App extends Component {
 
   render() {
     const { user, displayDrawer, listCourses, listNotifications } = this.state;
-    const { isLoggedIn } = this.props;
+    const { logIn, logOut, markNotificationAsRead } = this;
 
     return (
-      <AppContext.Provider value={{ user, logOut: this.logOut }}>
+      <AppContext.Provider value={{ user, logOut }}>
         <React.Fragment>
           <Notifications
             listNotifications={listNotifications}
             displayDrawer={displayDrawer}
             handleDisplayDrawer={this.handleDisplayDrawer}
             handleHideDrawer={this.handleHideDrawer}
-            markNotificationAsRead={markNotificationAsRead} // Pass the function to Notifications
+            markNotificationAsRead={markNotificationAsRead}
           />
           <div className={css(styles.app)}>
             <Header />
             <div className={css(styles.body)}>
-              {isLoggedIn ? (
+              {user.isLoggedIn ? (
                 <BodySectionWithMarginBottom title="Course list">
                   <CourseList listCourses={listCourses} />
                 </BodySectionWithMarginBottom>
@@ -147,13 +147,17 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.toJS());
   return {
-    isLoggedIn: state.uiReducer.isLoggedIn, // On mappe la propriété isLoggedIn du store Redux au composant
+    isLoggedIn: state.get('isUserLoggedIn'),
   };
 };
 
 // Connecter App au store Redux
-export default connect(mapStateToProps)(App);
+const ConnectedApp = connect(mapStateToProps)(App);
+
+export default ConnectedApp;
+export { mapStateToProps };
 
 // Define styles with Aphrodite
 const styles = StyleSheet.create({
