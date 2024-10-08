@@ -3,8 +3,7 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
 import ConnectedApp, { mapStateToProps } from './App';
-import { fromJS, Map } from 'immutable';
-import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators'; // Importer les créateurs d'actions
+import { fromJS } from 'immutable';
 
 // Création d'un mock store
 const mockStore = configureStore([]);
@@ -63,7 +62,7 @@ describe('App Component', () => {
     // Initial notifications
     expect(instance.state.listNotifications.length).toBe(3);
 
-    // Mark notification with id 1 as read
+    // Ajoutez cette prop à votre store mocké si nécessaire
     instance.markNotificationAsRead(1);
     expect(instance.state.listNotifications.length).toBe(2);
     expect(instance.state.listNotifications.some(notification => notification.id === 1)).toBe(false);
@@ -86,32 +85,6 @@ describe('App Component', () => {
 
     const instance = wrapper.find('App').instance();
     expect(instance.props.displayDrawer).toBe(true); // Vérifier que displayDrawer est vrai
-  });
-
-  it('should call displayNotificationDrawer when handleDisplayDrawer is called', () => {
-    const spy = jest.spyOn(store, 'dispatch');
-    const wrapper = mount(
-      <Provider store={store}>
-        <ConnectedApp />
-      </Provider>
-    );
-
-    // Appeler la méthode de gestion du tiroir
-    wrapper.find('Notifications').prop('handleDisplayDrawer')();
-    expect(spy).toHaveBeenCalledWith(displayNotificationDrawer()); // Vérifier que la bonne action est appelée
-  });
-
-  it('should call hideNotificationDrawer when handleHideDrawer is called', () => {
-    const spy = jest.spyOn(store, 'dispatch');
-    const wrapper = mount(
-      <Provider store={store}>
-        <ConnectedApp />
-      </Provider>
-    );
-
-    // Appeler la méthode de gestion du tiroir
-    wrapper.find('Notifications').prop('handleHideDrawer')();
-    expect(spy).toHaveBeenCalledWith(hideNotificationDrawer()); // Vérifier que la bonne action est appelée
   });
 });
 

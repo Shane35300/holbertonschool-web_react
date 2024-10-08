@@ -102,7 +102,7 @@ class App extends Component {
 
   render() {
     const { user, listCourses, listNotifications } = this.state;
-    const { logIn, logOut, markNotificationAsRead, displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
+    const { logIn, logOut, displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
 
     return (
       <AppContext.Provider value={{ user, logOut }}>
@@ -112,7 +112,7 @@ class App extends Component {
             displayDrawer={displayDrawer} // Utiliser la prop
             handleDisplayDrawer={displayNotificationDrawer} // Utiliser le créateur d'action
             handleHideDrawer={hideNotificationDrawer} // Utiliser le créateur d'action
-            markNotificationAsRead={markNotificationAsRead}
+            markNotificationAsRead={this.markNotificationAsRead} // Passer la méthode ici
           />
           <div className={css(styles.app)}>
             <Header />
