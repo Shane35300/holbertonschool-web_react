@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { Map } from 'immutable';
 import {
 	DISPLAY_NOTIFICATION_DRAWER,
 	HIDE_NOTIFICATION_DRAWER,
@@ -9,7 +9,7 @@ import {
 } from '../actions/uiActionTypes';
 
 // État initial du réducteur
-const initialState = fromJS({
+const initialState = Map({
 	isNotificationDrawerVisible: false,
 	isUserLoggedIn: false,
 	user: null, // Changer ici pour initialiser à null

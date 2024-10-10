@@ -110,10 +110,10 @@ class App extends Component {
 const mapStateToProps = (state) => {
   return {
     user: {
-      isLoggedIn: state.ui.isUserLoggedIn || false, // Accès direct à l'état
-      email: state.ui.user ? state.ui.user.email : '', // Assurez-vous que `user` existe avant d'accéder à `email`
+      isLoggedIn: state.getIn(['ui', 'isUserLoggedIn']) || false, // Utilisation de getIn
+      email: state.getIn(['ui', 'user', 'email']) || '', // Utilisation de getIn
     },
-    displayDrawer: state.ui.isNotificationDrawerVisible, // Accès direct à l'état
+    displayDrawer: state.getIn(['ui', 'isNotificationDrawerVisible']), // Utilisation de getIn
   };
 };
 

@@ -1,28 +1,29 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import App from './App'; // Assurez-vous que c'est le composant stateless
+import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
+import { Map as ImmutableMap } from 'immutable';
+import App from './App';
+import { initialState } from '../reducers/rootReducer'; // Importez votre état initial
 
-const mockStore = configureStore([]);
+const mockStore = configureStore(); // Créez un store mock
 
 describe('<App />', () => {
   let store;
 
   beforeEach(() => {
-    store = mockStore({
-      ui: {
-        drawerOpen: false, // État initial
-      },
-    });
+    // Créez une instance du store avec l'état initial
+    store = mockStore(ImmutableMap(initialState.toJS())); // Convertir en JS pour le mock store
   });
 
   it('should render the App component correctly', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <Provider store={store}>
         <App />
       </Provider>
     );
+
+    // Ajoutez vos assertions ici
     expect(wrapper.exists()).toBe(true);
   });
 });
